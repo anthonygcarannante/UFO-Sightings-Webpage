@@ -25,7 +25,7 @@ function filterDate() {
 
     // Get the data from the date inputted by the user
     var filteredData = tableData.filter(date => date.datetime == inputDate);
-
+    
     // Create function with d3 to update each cell's text with all values found from the filtered data
     // [datetime, city, state, country, shape, duration, comments]
     filteredData.forEach(function(insertData) {
