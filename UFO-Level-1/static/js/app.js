@@ -17,7 +17,7 @@ function createTable(data) {
   // Create function with d3 to update each cell's text with all values found from the filtered data
   // [datetime, city, state, country, shape, duration, comments]
   filterData.forEach(function(dataRow) {
-  console.log(dataRow);
+    console.log(dataRow);
   let row = ufoTable.append("tr");
 
   // Append a cell into the row with each value in the ufo table object
@@ -38,7 +38,7 @@ function handleClick() {
 
   // Get the data from the date inputted by the user
   if(inputDate) {
-  filterData = tableData.filter(date => date.datetime == inputDate);
+    filterData = tableData.filter(date => date.datetime == inputDate);
   };
 
   // Create table with filtered data from the date input
