@@ -38,7 +38,7 @@ function handleClick() {
 
   // Get the data from the date inputted by the user
   if(inputDate) {
-  filterData = tableData.filter(date => date.datetime == inputDate);
+    filterData = tableData.filter(date => date.datetime == inputDate);
   };
 
   // Create table with filtered data from the date input

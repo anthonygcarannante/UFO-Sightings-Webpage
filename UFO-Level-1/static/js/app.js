@@ -16,7 +16,7 @@ function createTable(data) {
 
   // Create function with d3 to update each cell's text with all values found from the filtered data
   // [datetime, city, state, country, shape, duration, comments]
-  filterData.forEach(function(dataRow) {
+  data.forEach(function(dataRow) {
     console.log(dataRow);
   let row = ufoTable.append("tr");
 
