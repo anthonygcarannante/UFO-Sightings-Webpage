@@ -6,9 +6,7 @@ let ufoTable = d3.select("tbody");
 
 // Select the filter button
 var button = d3.select("#filter-btn");
-
-// Create event handlers for clicking the button
-button.on("click", handleClick);
+var form = d3.select("#form");
 
 function createTable(data) {
   // Clear existing table
@@ -16,34 +14,58 @@ function createTable(data) {
 
   // Create function with d3 to update each cell's text with all values found from the filtered data
   // [datetime, city, state, country, shape, duration, comments]
-  filterData.forEach(function(dataRow) {
-  console.log(dataRow);
-  let row = ufoTable.append("tr");
+  data.forEach((dataRow) => {
+    let row = ufoTable.append("tr");
 
-  // Append a cell into the row with each value in the ufo table object
-  Object.entries(dataRow).forEach(([key,value]) => {
-    let cell = row.append("td");
-    cell.text(value);
+    // Append a cell into the row with each value in the ufo table object
+    Object.entries(dataRow).forEach(([key,value]) => {
+      let cell = row.append("td");
+      cell.text(value);
     });
   });
 };
 
-function handleClick() {
-  // Prevents page from refreshing
-  d3.event.preventDefault();
+// Store filtered values
+var filters = {};
 
-  // Select the value from the datetime element
-  let inputDate = d3.select("#datetime").property("value");
-  console.log(`UFO Sightings on: ${inputDate}`);
+// For this to work, the input ID in the HTML code must be the same
+// as the keys seen in the data.js file.
+function updateFilters() {
+  
+  // Save the element, value, and id of the filter that was changed
+  var changedElement = d3.select(this).select("input");
+  var elementValue = changedElement.property("value");
+  var filterId = changedElement.attr("id");
 
-  // Get the data from the date inputted by the user
-  if(inputDate) {
-    filterData = tableData.filter(date => date.datetime == inputDate);
+  // If a filter value was entered then add that filterId and value
+  // to the filters list. Otherwise, clear that filter from the filters object
+  if (elementValue) {
+    filters[filterId] = elementValue;
+  }
+  else {
+    delete filters[filterId];
   };
 
   // Create table with filtered data from the date input
-  createTable(filterData);
+  filterTable();
 };
 
-// Create table on default webpage from data source.
+function filterTable() {
+  
+  // Select filteredData to the tableData
+  let filteredData = tableData;
+
+  // Loop through all fo the filters and keep any data that matches the filter values
+  Object.entries(filters).forEach(([key,value]) => {
+    filteredData = filteredData.filter(row => row[key] === value);
+  });
+
+  // Build a new table using the filtered data
+  createTable(filteredData);
+};
+
+// Attach event to listen for changes to each filter
+d3.selectAll(".filter").on("change", updateFilters);
+
+// Create table on default webpage from data source
 createTable(tableData);
