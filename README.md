@@ -1,4 +1,4 @@
-# Javascript-Challenge
+# UFO-Sightings-Webpage
 
 This repository is to showcase my javascript skills by creating an interactive webpage that automatically updates a table displaying UFO sightings.
 
